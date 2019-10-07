@@ -1,0 +1,49 @@
+@page
+@model MyFormModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "入力フォーム";
+}
+
+<div>
+    <form id="MyForm" method="post">
+        <div class="form-group">
+            <label asp-for="UserApplication.Email"></label>
+            <input type="email" class="form-control" asp-for="UserApplication.Email" aria-describedby="emailHelp" placeholder="Enter email">
+            <span asp-validation-for="UserApplication.Email" class="text-danger"></span>
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+            <label asp-for="UserApplication.Password"></label>
+            <input type="password" class="form-control" asp-for="UserApplication.Password" id="exampleInputPassword1" placeholder="Password">
+            <span asp-validation-for="UserApplication.Password" class="text-danger"></span>
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    $(function(){
+        $('#MyForm').on('submit', function(e) {
+            e.preventDefault();
+            
+            var formAction = '/MyForm';
+            var formData = $(this).serialize();
+            
+            $.post({
+                url: formAction,
+                data: formData
+            }).done(function(data) {
+                console.log(data); 
+            });
+        });
+    });
+    </script>
+}
