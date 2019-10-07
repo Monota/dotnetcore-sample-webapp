@@ -28,22 +28,22 @@
 </div>
 
 @section Scripts {
-    <script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    $(function(){
-        $('#MyForm').on('submit', function(e) {
-            e.preventDefault();
-            
-            var formAction = '/MyForm';
-            var formData = $(this).serialize();
-            
-            $.post({
-                url: formAction,
-                data: formData
-            }).done(function(data) {
-                console.log(data); 
+    <script>
+        $(function () {
+            $('#MyForm').on('submit', function (e) {
+                e.preventDefault();
+
+                var formAction = '/MyForm';
+                var formData = $(this).serialize();
+
+                $.post({
+                    url: formAction,
+                    data: formData
+                }).done(function (data) {
+                    console.log(data);
+                });
             });
         });
-    });
     </script>
 }
