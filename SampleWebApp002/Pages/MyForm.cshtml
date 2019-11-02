@@ -9,6 +9,11 @@
 <div>
     <form id="MyForm" method="post">
         <div class="form-group">
+            <label asp-for="UserApplication.UserId"></label>
+            <input type="text" class="form-control" asp-for="UserApplication.UserId" placeholder="Enter UserName">
+            <span asp-validation-for="UserApplication.UserId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
             <label asp-for="UserApplication.Email"></label>
             <input type="email" class="form-control" asp-for="UserApplication.Email" aria-describedby="emailHelp" placeholder="Enter email">
             <span asp-validation-for="UserApplication.Email" class="text-danger"></span>
@@ -18,6 +23,11 @@
             <label asp-for="UserApplication.Password"></label>
             <input type="password" class="form-control" asp-for="UserApplication.Password" id="exampleInputPassword1" placeholder="Password">
             <span asp-validation-for="UserApplication.Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="UserApplication.PasswordConfirm"></label>
+            <input type="password" class="form-control" asp-for="UserApplication.PasswordConfirm" id="exampleInputPasswordConfirm1" placeholder="Password">
+            <span asp-validation-for="UserApplication.PasswordConfirm" class="text-danger"></span>
         </div>
         <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
@@ -34,14 +44,16 @@
             $('#MyForm').on('submit', function (e) {
                 e.preventDefault();
 
-                var formAction = '/MyForm';
+                var formAction = '@HttpContext.Request.PathBase/MyForm';
                 var formData = $(this).serialize();
 
                 $.post({
                     url: formAction,
                     data: formData
-                }).done(function (data) {
+                }).done(function (data, textStatus, jqXHR) {
                     console.log(data);
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus);
                 });
             });
         });
